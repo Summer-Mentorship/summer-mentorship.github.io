@@ -17,12 +17,12 @@ componentDidMount(){
 
   fetch('/currencies/v1/convert/EUR?',
   {method: 'GET', 
-  headers: {'x-api-key' : '7a115e89bb8b4d43bd20255171b885c3' },
+  headers: {'x-api-key' : '7a115e89bb8b4d43bd20255171b885c3' }, //my api key
   }).then(res => res.json())
-    .then(banan => {
+    .then(result => {
       this.setState({
         isLoaded: true,
-        items: banan
+        items: result //adds result to the list
       });
     });
 }
@@ -34,6 +34,7 @@ componentDidMount(){
 
   render() {
     const {items} = this.state;
+    //commented out, was not responding with the if/else-test.
     // if (!isLoaded) {
     //   return <div> Loading ...</div>;
     // } else {
