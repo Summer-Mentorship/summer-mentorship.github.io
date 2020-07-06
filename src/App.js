@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactCountryFlag from 'react-country-flag'; // could not find
+
  
 
 import './App.css';
@@ -9,22 +11,24 @@ class App extends React.Component{
     super(props);
     this.state = {
       items: [],
-      isLoaded: false,
     };
   }
  
 componentDidMount(){
-
+  try{
   fetch('/currencies/v1/convert/EUR?',
   {method: 'GET', 
   headers: {'x-api-key' : '7a115e89bb8b4d43bd20255171b885c3' }, //my api key
   }).then(res => res.json())
     .then(result => {
       this.setState({
-        isLoaded: true,
         items: result //adds result to the list
       });
     });
+  }
+  catch(error){
+    console.log(error); 
+  }
 }
 
 
@@ -33,11 +37,7 @@ componentDidMount(){
 
 
   render() {
-    const {items} = this.state;
-    //commented out, was not responding with the if/else-test.
-    // if (!isLoaded) {
-    //   return <div> Loading ...</div>;
-    // } else {
+    const {items} = this.state; 
       return (
         <table>
           <thead>
@@ -51,7 +51,10 @@ componentDidMount(){
           <tbody>
           {items.map(item => (
             <tr key={items.country}>
-              <td>{item.country}</td>
+              <td><ReactCountryFlag 
+                    //className ="emojiFlag" 
+                    countryCode= {items.country} 
+                  /></td>  
               <td>{item.baseCurrency}</td>
               <td>{item.quoteCurrency}</td>
               <td>{item.midRate}</td>
