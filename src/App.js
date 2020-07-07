@@ -57,7 +57,8 @@ componentDidMount(){
           {items.map(item => (
             <tr key={item.country}>
               <td><ReactCountryFlag 
-                    countryCode = "NO"
+                    //className ="emojiFlag" 
+                    countryCode= {item.country} 
                   /></td>  
               <td>{item.baseCurrency}</td>
               <td>{item.quoteCurrency}</td>
