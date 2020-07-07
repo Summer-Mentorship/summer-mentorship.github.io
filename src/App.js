@@ -26,8 +26,13 @@ componentDidMount(){
       });
     });
   }
-  catch(error){
-    console.log(error); 
+  catch(err){
+    //alert(`Error:${err}`);
+    //console.log(error); 
+    //alert 
+  }
+  finally{
+
   }
 }
 
@@ -50,10 +55,9 @@ componentDidMount(){
           </thead>
           <tbody>
           {items.map(item => (
-            <tr key={items.country}>
+            <tr key={item.country}>
               <td><ReactCountryFlag 
-                    //className ="emojiFlag" 
-                    countryCode= {items.country} 
+                    countryCode = "NO"
                   /></td>  
               <td>{item.baseCurrency}</td>
               <td>{item.quoteCurrency}</td>
