@@ -53,7 +53,7 @@ componentDidMount(){
             <tr key={items.country}>
               <td><ReactCountryFlag 
                     //className ="emojiFlag" 
-                    countryCode= {items.country} 
+                    countryCode= {item.country} 
                   /></td>  
               <td>{item.baseCurrency}</td>
               <td>{item.quoteCurrency}</td>
