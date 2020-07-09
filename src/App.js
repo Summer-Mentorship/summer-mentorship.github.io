@@ -11,6 +11,7 @@ class App extends React.Component{
     super(props);
     this.state = {
       items: [],
+      isLoaded: false,
     };
   }
  
@@ -22,16 +23,20 @@ componentDidMount(){
   }).then(res => res.json())
     .then(result => {
       this.setState({
-        items: result //adds result to the list
+        items: result, //adds result to the list
+        isLoaded: true
       });
     });
   }
   catch(err){
-    //alert(`Error:${err}`);
+    alert(err);
     //console.log(error); 
     //alert 
   }
   finally{
+    this.setState({
+      isLoaded: true
+    });
 
   }
 }
@@ -39,11 +44,29 @@ componentDidMount(){
 
 // To show te result in json ==  .then(json => console.log(json));
 
-
+handleSubmit(event){
+  alert('This is what you are searching for' + this.state.value)
+}
 
   render() {
     const {items} = this.state; 
+    // this.state.isLoaded;
+    if (this.isLoaded){
+      return(
+      <div> 
+        <p>The page is not able to load, try again later  </p>
+
+      </div>
+      )
+
+    }else{
       return (
+        <div>
+        <h1>Currecy</h1>
+        <form onSubmit= {this.handleSubmit}>
+            <input type = 'text' value = ''></input>
+            <button type = 'submit' value ='submit'>Search</button>
+        </form>
         <table>
           <thead>
           <tr>
@@ -68,7 +91,9 @@ componentDidMount(){
           ))}
           </tbody>
         </table>
+        </div>
       );
+      }
     }
   }
 
