@@ -11,8 +11,11 @@ class App extends React.Component{
     super(props);
     this.state = {
       items: [],
+      visableItems: [], 
       isLoaded: false,
-      searchCountry: ''
+      searchCountry: '',
+      
+    
     };
   }
  
@@ -24,7 +27,8 @@ componentDidMount(){
   }).then(res => res.json())
     .then(result => {
       this.setState({
-        items: result, //adds result to the list// To show te result in json ==  .then(json => console.log(json));
+        items: result,
+        visableItems: result, //adds result to the list// To show te result in json ==  .then(json => console.log(json));
         isLoaded: true
       });
     });
@@ -41,23 +45,21 @@ componentDidMount(){
 }
 
 
-handleSearch = (event) => {
+handleSearch = event => {
   const {items} = this.state;
+  
   this.setState({searchCountry: event.target.value});
+  // Trying to set filtered items lits at value to key; visableItems.
+  this.setState({visableItems: items.filter(item => item.countryCode === this.state.searchCountry)});
 
-  if (items.includes(this.state.searchCountry)){
-    <p>The Search exists in list</p>
-  }
-  else{
-    <p>The search does not exist in list</p>
-  }
- 
 } //End of handleSearch
 
 
 
   render() {
-    const {items} = this.state; 
+    //const {items} = this.state; 
+    const {visableItems} = this.state;
+
     // this.state.isLoaded;
     if (!this.state.isLoaded){
       return(
@@ -73,14 +75,8 @@ handleSearch = (event) => {
         <h1>Currecy</h1>
         <form>
           <h1>This is what you search for: {this.state.searchCountry} </h1>
-
+         
           <input type = 'text' name='searchCountry' onChange={this.handleSearch} placeholder='Search'/>
-
-          {/* this is not working */}
-          {/* <p key={this.state.searchCountry}>
-          {item.baseCurrency} <br/>
-          {item.quoteCurrency}
-          </p> */}
 
         </form>
         <table id = 'result'>
@@ -93,7 +89,7 @@ handleSearch = (event) => {
           </tr>
           </thead>
           <tbody>
-          {items.map(item => (
+          {this.state.visableItems.map(item => (
             <tr key={item.country}>
               <td><ReactCountryFlag 
                     //className ="emojiFlag" 
