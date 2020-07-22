@@ -49,16 +49,23 @@ handleSearch = event => {
   const {items} = this.state;
   
   this.setState({searchCountry: event.target.value});
-  // Trying to set filtered items lits at value to key; visableItems.
-  this.setState({visableItems: items.filter(item => item.countryCode === this.state.searchCountry)});
+ 
 
+  // Trying to set filtered items lits at value to key; visableItems.
+  this.setState({visableItems: items.filter(item => {
+    if (item.country.includes(this.state.searchCountry.toUpperCase())){
+      return true;
+    }
+    return false;
+  })
+  });
 } //End of handleSearch
 
 
 
   render() {
     //const {items} = this.state; 
-    const {visableItems} = this.state;
+    //const {visableItems} = this.state;
 
     // this.state.isLoaded;
     if (!this.state.isLoaded){
@@ -74,12 +81,12 @@ handleSearch = event => {
         <div>
         <h1>Currecy</h1>
         <form>
-          <h1>This is what you search for: {this.state.searchCountry} </h1>
+          {/* <h1>This is what you search for: {this.state.searchCountry} </h1> */}
          
           <input type = 'text' name='searchCountry' onChange={this.handleSearch} placeholder='Search'/>
 
         </form>
-        <table id = 'result'>
+        <table>
           <thead>
           <tr>
             <th>Country</th>
