@@ -50,15 +50,20 @@ handleSearch = event => {
   
   this.setState({searchCountry: event.target.value});
  
-
-  // Trying to set filtered items lits at value to key; visableItems.
-  this.setState({visableItems: items.filter(item => {
-    if (item.country.includes(this.state.searchCountry.toUpperCase())){
-      return true;
-    }
-    return false;
-  })
-  });
+  //check for empty field, if so set list to full list. 
+  if (event.target.value == '' ){
+    this.setState({visableItems: items});
+  }
+  else{
+    // Trying to set filtered items lits at value to key; visableItems.
+    this.setState({visableItems: items.filter(item => {
+      if (item.country.includes(this.state.searchCountry.toUpperCase())){
+        return true;
+      }
+      return false;
+    })
+    });
+  }
 } //End of handleSearch
 
 
