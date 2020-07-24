@@ -48,6 +48,10 @@ handleSubmit(event){
   alert('This is what you are searching for' + this.state.value)
 }
 
+handleSort() {
+  alert("handling sort");
+}
+
   render() {
     const {items} = this.state; 
     // this.state.isLoaded;
@@ -63,6 +67,8 @@ handleSubmit(event){
       return (
         <div>
         <h1>Currecy</h1>
+        <button onClick={this.handleSort}>Sort</button> 
+
         <form onSubmit= {this.handleSubmit}>
             <input type = 'text' value = ''></input>
             <button type = 'submit' value ='submit'>Search</button>
