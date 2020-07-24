@@ -11,7 +11,11 @@ class App extends React.Component{
     super(props);
     this.state = {
       items: [],
+      visableItems: [], 
       isLoaded: false,
+      searchCountry: '',
+      
+    
     };
   }
  
@@ -23,15 +27,14 @@ componentDidMount(){
   }).then(res => res.json())
     .then(result => {
       this.setState({
-        items: result, //adds result to the list
+        items: result,
+        visableItems: result, //adds result to the list// To show te result in json ==  .then(json => console.log(json));
         isLoaded: true
       });
     });
   }
   catch(err){
     alert(err);
-    //console.log(error); 
-    //alert 
   }
   finally{
     this.setState({
@@ -42,16 +45,33 @@ componentDidMount(){
 }
 
 
-// To show te result in json ==  .then(json => console.log(json));
+handleSearch = async event => {
+  const {items} = this.state;
+  
+  await this.setState({searchCountry: event.target.value});
 
-handleSubmit(event){
-  alert('This is what you are searching for' + this.state.value)
-}
+  console.log(this.state.searchCountry);
+ 
+
+  // Trying to set filtered items lits at value to key; visableItems.
+  this.setState({visableItems: items.filter(item => {
+    if (item.country.includes(this.state.searchCountry.toUpperCase())){
+      return true;
+    }
+    return false;
+    })
+  });
+
+} //End of handleSearch
+
+
 
   render() {
-    const {items} = this.state; 
+    //const {items} = this.state; 
+    //const {visableItems} = this.state;
+
     // this.state.isLoaded;
-    if (this.isLoaded){
+    if (!this.state.isLoaded){
       return(
       <div> 
         <p>The page is not able to load, try again later  </p>
@@ -63,9 +83,11 @@ handleSubmit(event){
       return (
         <div>
         <h1>Currecy</h1>
-        <form onSubmit= {this.handleSubmit}>
-            <input type = 'text' value = ''></input>
-            <button type = 'submit' value ='submit'>Search</button>
+        <form>
+          {/* <h1>This is what you search for: {this.state.searchCountry} </h1> */}
+         
+          <input type = 'text' name='searchCountry' onChange={this.handleSearch} placeholder='Search'/>
+
         </form>
         <table>
           <thead>
@@ -77,8 +99,8 @@ handleSubmit(event){
           </tr>
           </thead>
           <tbody>
-          {items.map(item => (
-            <tr key={item.country}>
+          {this.state.visableItems.map((item, index) => (
+            <tr key={index}>
               <td><ReactCountryFlag 
                     //className ="emojiFlag" 
                     countryCode= {item.country} 
@@ -95,7 +117,8 @@ handleSubmit(event){
       );
       }
     }
-  }
+}
+
 
      
 
