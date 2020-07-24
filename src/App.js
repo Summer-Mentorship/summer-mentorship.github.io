@@ -61,7 +61,7 @@ handleSearch = event => {
         return true;
       }
       return false;
-    })
+      })
     });
   }
 } //End of handleSearch
