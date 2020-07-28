@@ -66,8 +66,20 @@ handleSearch = async event => {
 
 
 
-handleSort() {
-  alert("handling sort");
+handleCountry =  event => {
+  const {items} = this.state;
+  this.setState({visabelItems: items.sort((a,b) => (a.country > b.country) ? -1: -1)})
+}
+
+
+handleBase =  event => {
+  const {items} = this.state;
+  this.setState({visabelItems: items.sort((a,b) => (a.baseCurrency > b.baseCurrency) ? -1: -1)})
+}
+
+handleRate =  event => {
+  const {items} = this.state;
+  this.setState({visabelItems: items.sort((a,b) => (a.midRate - b.midRate))})
 }
 
   render() {
@@ -89,17 +101,17 @@ handleSort() {
         <h1>Currecy</h1>
         <form>
           {/* <h1>This is what you search for: {this.state.searchCountry} </h1> */}
-         
+          <label for="searchCountry">Search: </label>
           <input type = 'text' name='searchCountry' onChange={this.handleSearch} placeholder='Search'/>
 
         </form>
         <table>
           <thead>
-          <tr>
-            <th><button>Country</button></th>
-            <th><button>BaseCurrency</button></th>
-            <th><button>QuoteCurrency</button></th>
-            <th><button>Rate</button></th>
+          <tr class = "buttons">
+            <th><button type="button" onClick={this.handleCountry}>Country</button></th>
+            <th><button type ="button" onClick={this.handleBase} >BaseCurrency</button></th>
+            <th>QuoteCurrency</th>
+            <th><button type = "button" onClick={this.handleRate}>Rate</button></th>
           </tr>
           </thead>
           <tbody>
