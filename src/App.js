@@ -79,7 +79,7 @@ handleBase =  event => {
 
 handleRate =  event => {
   const {items} = this.state;
-  this.setState({visabelItems: items.sort((a,b) => (a.midRate - b.midRate))})
+  this.setState({visabelItems: items.sort((a,b) => (a.midRate - b.midRate) )})
 }
 
   render() {
@@ -101,7 +101,7 @@ handleRate =  event => {
         <h1>Currecy</h1>
         <form>
           {/* <h1>This is what you search for: {this.state.searchCountry} </h1> */}
-          <label for="searchCountry">Search: </label>
+          <label for="searchCountry">Search:</label>
           <input type = 'text' name='searchCountry' onChange={this.handleSearch} placeholder='Search'/>
 
         </form>
