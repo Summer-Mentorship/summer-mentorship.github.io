@@ -24,12 +24,14 @@ table tr th{
 .buttons button {
   background-color: white;
   border:none;
-  font-size: 16px;
-
-  
+  font-size: 16px; 
 }
 
-.buttons button:hover{
-  border:1px solid;
+
+.buttons:focus{
+  outline: none;
 }
 
+.buttons:active{
+  border: none;
+}

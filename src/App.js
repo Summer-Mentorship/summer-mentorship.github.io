@@ -1,9 +1,15 @@
 import React from 'react';
 import ReactCountryFlag from 'react-country-flag'; // could not find
 
- 
-
 import './App.css';
+
+//importing icon
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons'
+ 
+//Arrow icon
+const arrows = <FontAwesomeIcon icon = {faArrowsAltV} />
+ 
 
 class App extends React.Component{
 
@@ -18,6 +24,9 @@ class App extends React.Component{
     
     };
   }
+
+
+  
  
 componentDidMount(){
   try{
@@ -82,9 +91,7 @@ handleRate =  event => {
   this.setState({visabelItems: items.sort((a,b) => (a.midRate - b.midRate) )})
 }
 
-  render() {
-    //const {items} = this.state; 
-    //const {visableItems} = this.state;
+ render() {
 
     // this.state.isLoaded;
     if (!this.state.isLoaded){
@@ -108,10 +115,10 @@ handleRate =  event => {
         <table>
           <thead>
           <tr class = "buttons">
-            <th><button type="button" onClick={this.handleCountry}>Country</button></th>
-            <th><button type ="button" onClick={this.handleBase} >BaseCurrency</button></th>
+            <th><button type="button" onClick={this.handleCountry}>Country{arrows}</button></th>
+            <th><button type ="button" onClick={this.handleBase} >BaseCurrency {arrows}</button></th>
             <th>QuoteCurrency</th>
-            <th><button type = "button" onClick={this.handleRate}>Rate</button></th>
+            <th><button type = "button" onClick={this.handleRate}>Rate {arrows}</button></th>
           </tr>
           </thead>
           <tbody>
