@@ -20,7 +20,7 @@ class App extends React.Component{
       visableItems: [], 
       isLoaded: false,
       searchCountry: '',
-      
+      lastSorted: ''
     
     };
   }
@@ -38,7 +38,8 @@ componentDidMount(){
       this.setState({
         items: result,
         visableItems: result, //adds result to the list// To show te result in json ==  .then(json => console.log(json));
-        isLoaded: true
+        isLoaded: true,
+        
       });
     });
   }
@@ -77,18 +78,55 @@ handleSearch = async event => {
 
 handleCountry =  event => {
   const {items} = this.state;
-  this.setState({visabelItems: items.sort((a,b) => (a.country > b.country) ? -1: -1)})
+  if (this.state.lastSorted !== 'country') {
+    this.setState({visableItems: items.sort((a,b) => (a.country > b.country))})
+    this.setState({lastSorted: 'country'})
+  }else {
+    const liste = this.state.visableItems;
+    this.setState({visableItems: liste.reverse()})
+
+    console.log(this.state.visableItems);
+    
+  }
 }
 
 
 handleBase =  event => {
   const {items} = this.state;
-  this.setState({visabelItems: items.sort((a,b) => (a.baseCurrency > b.baseCurrency) ? -1: -1)})
+  if (this.state.lastSorted !== 'base'){
+    this.setState({visableItems: items.sort((a,b) => (a.baseCurrency > b.baseCurrency))})
+    this.setState({lastSorted: 'base'})
+  } else {
+    const listet = this.state.visableItems;
+    this.setState({visableItems: listet.reverse()})
+
+    console.log(this.state.visableItems);
+  }
+  
 }
 
 handleRate =  event => {
   const {items} = this.state;
-  this.setState({visabelItems: items.sort((a,b) => (a.midRate - b.midRate) )})
+  //printing to console
+  console.log('This is items before the if test');
+  console.log(this.state.items);
+
+  if (this.state.lastSorted !== 'rate'){
+    this.setState({visableItems: items.sort((a,b) => (a.midRate - b.midRate) )})
+    this.setState({lastSorted: 'rate'})
+
+    //Printing to console to se what items is.
+    console.log('Items');
+    console.log(this.state.items);
+    console.log('visableItems');
+    console.log(this.state.visableItems);
+  }else {
+    const list = this.state.visableItems;
+    this.setState({visableItems: list.reverse()})
+
+    console.log(this.state.visableItems);
+  }
+  
 }
 
  render() {
@@ -115,10 +153,10 @@ handleRate =  event => {
         <table>
           <thead>
           <tr class = "buttons">
-            <th><button type="button" onClick={this.handleCountry}>Country{arrows}</button></th>
-            <th><button type ="button" onClick={this.handleBase} >BaseCurrency {arrows}</button></th>
+            <th><p onClick={this.handleCountry}> Country{arrows}</p></th>
+            <th><p onClick={this.handleBase} >BaseCurrency {arrows}</p></th>
             <th>QuoteCurrency</th>
-            <th><button type = "button" onClick={this.handleRate}>Rate {arrows}</button></th>
+            <th><p onClick={this.handleRate}>Rate {arrows}</p></th>
           </tr>
           </thead>
           <tbody>
