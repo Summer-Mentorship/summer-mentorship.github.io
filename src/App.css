@@ -19,6 +19,7 @@ table tr td{
 table tr th{
   background-color: white;
   text-align: center;
+  cursor: pointer;
   
 }
 .buttons button {
@@ -28,11 +29,12 @@ table tr th{
   font-weight: bold;
 }
 
-
-.buttons:focus{
-  outline: none;
+table tr th p i{
+  display: none;
 }
 
-.buttons:active{
-  border: none;
+/* why does this not work */
+table tr th p i:focus{ 
+  display:block;
 }
+

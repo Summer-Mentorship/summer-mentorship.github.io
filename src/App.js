@@ -5,10 +5,12 @@ import './App.css';
 
 //importing icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons'
+import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons'
  
 //Arrow icon
-const arrows = <FontAwesomeIcon icon = {faArrowsAltV} />
+const up = <FontAwesomeIcon icon = {faArrowUp} />
+const down = <FontAwesomeIcon icon = {faArrowDown} />
+let arrow = up;
  
 
 class App extends React.Component{
@@ -79,13 +81,20 @@ handleSearch = async event => {
 handleCountry =  event => {
   const {items} = this.state;
   if (this.state.lastSorted !== 'country') {
-    this.setState({visableItems: items.sort((a,b) => (a.country > b.country))})
+    this.setState({visableItems: items.concat().sort((a,b) => (a.country > b.country))})
     this.setState({lastSorted: 'country'})
+    arrow = up;
+
   }else {
     const liste = this.state.visableItems;
     this.setState({visableItems: liste.reverse()})
 
     console.log(this.state.visableItems);
+    if (arrow === down){
+      arrow = up;
+    }else{
+      arrow = down;
+    }
     
   }
 }
@@ -94,37 +103,44 @@ handleCountry =  event => {
 handleBase =  event => {
   const {items} = this.state;
   if (this.state.lastSorted !== 'base'){
-    this.setState({visableItems: items.sort((a,b) => (a.baseCurrency > b.baseCurrency))})
+    this.setState({visableItems: items.concat().sort((a,b) => (a.baseCurrency > b.baseCurrency))})
     this.setState({lastSorted: 'base'})
+    arrow = up;
+
   } else {
     const listet = this.state.visableItems;
     this.setState({visableItems: listet.reverse()})
 
-    console.log(this.state.visableItems);
+    if (arrow === down){
+      arrow = up;
+    }else{
+      arrow = down;
+    }
+    
   }
   
 }
 
 handleRate =  event => {
   const {items} = this.state;
-  //printing to console
-  console.log('This is items before the if test');
-  console.log(this.state.items);
+  
+  
 
   if (this.state.lastSorted !== 'rate'){
-    this.setState({visableItems: items.sort((a,b) => (a.midRate - b.midRate) )})
+    this.setState({visableItems: items.concat().sort((a,b) => (a.midRate - b.midRate) )})
     this.setState({lastSorted: 'rate'})
 
-    //Printing to console to se what items is.
-    console.log('Items');
-    console.log(this.state.items);
-    console.log('visableItems');
-    console.log(this.state.visableItems);
+    arrow = up;
+    
   }else {
     const list = this.state.visableItems;
     this.setState({visableItems: list.reverse()})
 
-    console.log(this.state.visableItems);
+    if (arrow === down){
+      arrow = up;
+    }else{
+      arrow = down;
+    }
   }
   
 }
@@ -153,10 +169,10 @@ handleRate =  event => {
         <table>
           <thead>
           <tr class = "buttons">
-            <th><p onClick={this.handleCountry}> Country{arrows}</p></th>
-            <th><p onClick={this.handleBase} >BaseCurrency {arrows}</p></th>
+            <th><p onClick={this.handleCountry}> Country <i>{arrow}</i></p></th>
+            <th><p onClick={this.handleBase} >BaseCurrency <i>{arrow}</i></p></th>
             <th>QuoteCurrency</th>
-            <th><p onClick={this.handleRate}>Rate {arrows}</p></th>
+            <th><p onClick={this.handleRate}>Rate <i>{arrow}</i></p></th>
           </tr>
           </thead>
           <tbody>
