@@ -13,6 +13,7 @@ const down = <FontAwesomeIcon icon = {faArrowDown} />
 let arrow = up;
  
 
+
 class App extends React.Component{
 
   constructor(props) {
@@ -158,21 +159,23 @@ handleRate =  event => {
 
     }else{
       return (
+  
+        //Test på om fokuse === country OSV jes show arrow no dont show
         <div>
         <h1>Currecy</h1>
         <form>
-          {/* <h1>This is what you search for: {this.state.searchCountry} </h1> */}
-          <label for="searchCountry">Search:</label>
-          <input type = 'text' name='searchCountry' onChange={this.handleSearch} placeholder='Search'/>
-
+          <label for="searchCountry">Search:
+          <input type = 'text' name='searchCountry' onChange={this.handleSearch} placeholder='Search'/></label>
         </form>
+
         <table>
           <thead>
           <tr class = "buttons">
-            <th><p onClick={this.handleCountry}> Country <i>{arrow}</i></p></th>
-            <th><p onClick={this.handleBase} >BaseCurrency <i>{arrow}</i></p></th>
+           
+            <th><p onClick={this.handleCountry}> Country  {this.state.lastSorted === 'country' ? <i>{arrow}</i> : '' }</p></th>
+            <th><p onClick={this.handleBase} >BaseCurrency {this.state.lastSorted === 'base' ? <i>{arrow}</i> : ''}</p></th>
             <th>QuoteCurrency</th>
-            <th><p onClick={this.handleRate}>Rate <i>{arrow}</i></p></th>
+            <th><p onClick={this.handleRate}>Rate {this.state.lastSorted === 'rate' ? <i>{arrow}</i> : '' }</p></th>
           </tr>
           </thead>
           <tbody>

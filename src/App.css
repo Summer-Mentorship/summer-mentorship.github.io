@@ -29,12 +29,5 @@ table tr th{
   font-weight: bold;
 }
 
-table tr th p i{
-  display: none;
-}
 
-/* why does this not work */
-table tr th p i:focus{ 
-  display:block;
-}
 
