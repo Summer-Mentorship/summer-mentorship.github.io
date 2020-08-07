@@ -1,9 +1,18 @@
 import React from 'react';
 import ReactCountryFlag from 'react-country-flag'; // could not find
 
+import './App.css';
+
+//importing icon
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons'
+ 
+//Arrow icon
+const up = <FontAwesomeIcon icon = {faArrowUp} />
+const down = <FontAwesomeIcon icon = {faArrowDown} />
+let arrow = up;
  
 
-import './App.css';
 
 class App extends React.Component{
 
@@ -14,10 +23,13 @@ class App extends React.Component{
       visableItems: [], 
       isLoaded: false,
       searchCountry: '',
-      
+      lastSorted: ''
     
     };
   }
+
+
+  
  
 componentDidMount(){
   try{
@@ -29,7 +41,8 @@ componentDidMount(){
       this.setState({
         items: result,
         visableItems: result, //adds result to the list// To show te result in json ==  .then(json => console.log(json));
-        isLoaded: true
+        isLoaded: true,
+        
       });
     });
   }
@@ -66,9 +79,74 @@ handleSearch = async event => {
 
 
 
-  render() {
-    //const {items} = this.state; 
-    //const {visableItems} = this.state;
+handleCountry =  event => {
+  const {items} = this.state;
+  if (this.state.lastSorted !== 'country') {
+    this.setState({visableItems: items.concat().sort((a,b) => (a.country > b.country))})
+    this.setState({lastSorted: 'country'})
+    arrow = up;
+
+  }else {
+    const liste = this.state.visableItems;
+    this.setState({visableItems: liste.reverse()})
+
+    console.log(this.state.visableItems);
+    if (arrow === down){
+      arrow = up;
+    }else{
+      arrow = down;
+    }
+    
+  }
+}
+
+
+handleBase =  event => {
+  const {items} = this.state;
+  if (this.state.lastSorted !== 'base'){
+    this.setState({visableItems: items.concat().sort((a,b) => (a.baseCurrency > b.baseCurrency))})
+    this.setState({lastSorted: 'base'})
+    arrow = up;
+
+  } else {
+    const listet = this.state.visableItems;
+    this.setState({visableItems: listet.reverse()})
+
+    if (arrow === down){
+      arrow = up;
+    }else{
+      arrow = down;
+    }
+    
+  }
+  
+}
+
+handleRate =  event => {
+  const {items} = this.state;
+  
+  
+
+  if (this.state.lastSorted !== 'rate'){
+    this.setState({visableItems: items.concat().sort((a,b) => (a.midRate - b.midRate) )})
+    this.setState({lastSorted: 'rate'})
+
+    arrow = up;
+    
+  }else {
+    const list = this.state.visableItems;
+    this.setState({visableItems: list.reverse()})
+
+    if (arrow === down){
+      arrow = up;
+    }else{
+      arrow = down;
+    }
+  }
+  
+}
+
+ render() {
 
     // this.state.isLoaded;
     if (!this.state.isLoaded){
@@ -81,21 +159,23 @@ handleSearch = async event => {
 
     }else{
       return (
+  
+        //Test på om fokuse === country OSV jes show arrow no dont show
         <div>
         <h1>Currecy</h1>
         <form>
-          {/* <h1>This is what you search for: {this.state.searchCountry} </h1> */}
-         
-          <input type = 'text' name='searchCountry' onChange={this.handleSearch} placeholder='Search'/>
-
+          <label for="searchCountry">Search:
+          <input type = 'text' name='searchCountry' onChange={this.handleSearch} placeholder='Search'/></label>
         </form>
+
         <table>
           <thead>
-          <tr>
-            <th>Country</th>
-            <th>BaseCurrency</th>
+          <tr class = "buttons">
+           
+            <th><p onClick={this.handleCountry}> Country  {this.state.lastSorted === 'country' ? <i>{arrow}</i> : '' }</p></th>
+            <th><p onClick={this.handleBase} >BaseCurrency {this.state.lastSorted === 'base' ? <i>{arrow}</i> : ''}</p></th>
             <th>QuoteCurrency</th>
-            <th>Rate</th>
+            <th><p onClick={this.handleRate}>Rate {this.state.lastSorted === 'rate' ? <i>{arrow}</i> : '' }</p></th>
           </tr>
           </thead>
           <tbody>
