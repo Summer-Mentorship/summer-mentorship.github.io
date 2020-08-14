@@ -29,14 +29,20 @@ class App extends React.Component{
   }
 
 
+
   
- 
+ //FEtches list over all currencies and rate converted to EUR
 componentDidMount(){
   try{
+  
   fetch('/currencies/v1/convert/EUR?',
   {method: 'GET', 
   headers: {'x-api-key' : '7a115e89bb8b4d43bd20255171b885c3' }, //my api key
-  }).then(res => res.json())
+  }),
+  fetch('/currencies/v1/NOK/convert/EUR?amount=20',
+  {method: 'GET',
+  headers: {'x-api-key' : '7a115e89bb8b4d43bd20255171b885c3'},
+  }) .then(res => res.json())
     .then(result => {
       this.setState({
         items: result,
