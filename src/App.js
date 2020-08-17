@@ -23,7 +23,9 @@ class App extends React.Component{
       visableItems: [], 
       isLoaded: false,
       searchCountry: '',
-      lastSorted: ''
+      lastSorted: '',
+      convert: [],
+      amount: 15,
     
     };
   }
@@ -38,11 +40,7 @@ componentDidMount(){
   fetch('/currencies/v1/convert/EUR?',
   {method: 'GET', 
   headers: {'x-api-key' : '7a115e89bb8b4d43bd20255171b885c3' }, //my api key
-  }),
-  fetch('/currencies/v1/NOK/convert/EUR?amount=20',
-  {method: 'GET',
-  headers: {'x-api-key' : '7a115e89bb8b4d43bd20255171b885c3'},
-  }) .then(res => res.json())
+  }).then(res => res.json())
     .then(result => {
       this.setState({
         items: result,
@@ -52,6 +50,8 @@ componentDidMount(){
       });
     });
   }
+
+ 
   catch(err){
     alert(err);
   }
@@ -61,7 +61,32 @@ componentDidMount(){
     });
 
   }
+
+  try{
+    const {amount} = this.props.match;
+  fetch('/currencies/v1/NOK/convert/EUR?amount=${amount}',
+  {method: 'GET',
+  headers: {'x-api-key' : '7a115e89bb8b4d43bd20255171b885c3'},
+  }).then(res2 => res2.json())
+    .then(result2 => {
+    this.setState({
+      convert: result2,
+      
+    });
+  });
+
+  }
+  catch(err){
+    alert(err);
+  }
+  finally{
+    console.log(this.state.convert);
+    console.log(this.state.items);
+  }
+
 }
+
+
 
 
 handleSearch = async event => {
@@ -86,6 +111,7 @@ handleSearch = async event => {
 
 
 handleCountry =  event => {
+
   const {items} = this.state;
   if (this.state.lastSorted !== 'country') {
     this.setState({visableItems: items.concat().sort((a,b) => (a.country > b.country))})
